@@ -30,41 +30,41 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
-  deleteObject
+  deleteObject,
 } from "./config/firebase";
 import STATES from "./utils/states.json";
 import { initialInvoice, initialItemLine } from "./utils/data";
-import { ToWords } from 'to-words';
+import { ToWords } from "to-words";
 
 const toWords = new ToWords({
-  localeCode: 'en-IN',
+  localeCode: "en-IN",
   converterOptions: {
     currency: true,
     ignoreDecimal: false,
     ignoreZeroCurrency: false,
-  }
-})
-
+  },
+});
 
 const InvoiceLayout: React.FC = () => {
   let fileInputRef = useRef<HTMLInputElement | null>(null);
   const [invoice, setInvoice] = useState<Invoice>({ ...initialInvoice });
-  const [uploading, setUploading] = useState<boolean>(false)
+  const [uploading, setUploading] = useState<boolean>(false);
   const [uploadError, setError] = useState<string>("");
   const [total, setTotal] = useState<number>(0.0);
   const [subTotal, setSubtotal] = useState<number>(0.0);
-  
+
   const handleInputClick = () => fileInputRef.current?.click();
 
   const handleLogoDelete = () => {
-    const logoRef = ref(storage, invoice.logo)
-    deleteObject(logoRef).then(() => {
-      setInvoice({...invoice, logo:''})
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
-
+    const logoRef = ref(storage, invoice.logo);
+    deleteObject(logoRef)
+      .then(() => {
+        setInvoice({ ...invoice, logo: "" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleChange = (name: keyof Invoice, value: string | number) => {
     if (
@@ -74,7 +74,7 @@ const InvoiceLayout: React.FC = () => {
     ) {
       const newInvoice = { ...invoice };
       if (name === "invoiceNumber" && typeof value === "string") {
-        newInvoice[name] = value === '' ? 0 : parseInt(value);
+        newInvoice[name] = value === "" ? 0 : parseInt(value);
       } else if (name === "invoiceTax" && typeof value === "string") {
         newInvoice[name] = value === "" ? 0 : parseFloat(value);
       } else if (
@@ -90,8 +90,8 @@ const InvoiceLayout: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(invoice)
-  }, [invoice])
+    console.log(invoice);
+  }, [invoice]);
 
   const handleInputLineChange = (
     itemIndex: number,
@@ -146,9 +146,10 @@ const InvoiceLayout: React.FC = () => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(progress)
-        setUploading(true)
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(progress);
+        setUploading(true);
       },
       (error) => {
         setError(error.message);
@@ -156,7 +157,7 @@ const InvoiceLayout: React.FC = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setInvoice({ ...invoice, logo: downloadURL });
-          setUploading(false)
+          setUploading(false);
         });
       }
     );
@@ -176,7 +177,7 @@ const InvoiceLayout: React.FC = () => {
     });
 
     setSubtotal(subTotal);
-    setInvoice({...invoice, invoiceSubtotal: subTotal})
+    setInvoice({ ...invoice, invoiceSubtotal: subTotal });
   }, [invoice.items]);
 
   useEffect(() => {
@@ -184,7 +185,7 @@ const InvoiceLayout: React.FC = () => {
     let tax = (subTotal * invoice.invoiceTax) / 100;
     total = subTotal + tax;
     setTotal(total);
-    setInvoice({...invoice, invoiceTotal: total})
+    setInvoice({ ...invoice, invoiceTotal: total });
   }, [subTotal, invoice.invoiceTax]);
 
   return (
@@ -221,29 +222,41 @@ const InvoiceLayout: React.FC = () => {
           className="invoice_company_details"
         >
           <Box>
-          {invoice.logo !== '' && <Button
+            {invoice.logo !== "" && (
+              <Button
                 size="sm"
                 colorScheme="red"
                 onClick={handleLogoDelete}
-                padding='10px'
-                position='absolute'
+                padding="10px"
+                position="absolute"
               >
-                <Trash size='15px'/>
-              </Button>}
-          <Box className="img_upload">
-            <Button size='sm' position='absolute' left='100%' colorScheme='red'>Delete Logo</Button>
-            {invoice.logo && <img src={invoice.logo} alt="logo"></img>}
-            {uploading || invoice.logo === '' && <Camera className="upload_icon" onClick={handleInputClick} />}
-            {uploading && <Spinner  color="gray.900" />}
-            <Input
-              accept="image/*"
-              ref={fileInputRef}
-              type="file"
-              hidden
-              onChange={handleFileUpload}
-            ></Input>
-          </Box>
-          {uploadError && <Alert>{uploadError}</Alert>}
+                <Trash size="15px" />
+              </Button>
+            )}
+            <Box className="img_upload">
+              <Button
+                size="sm"
+                position="absolute"
+                left="100%"
+                colorScheme="red"
+              >
+                Delete Logo
+              </Button>
+              {invoice.logo && <img src={invoice.logo} alt="logo"></img>}
+              {uploading ||
+                (invoice.logo === "" && (
+                  <Camera className="upload_icon" onClick={handleInputClick} />
+                ))}
+              {uploading && <Spinner color="gray.900" />}
+              <Input
+                accept="image/*"
+                ref={fileInputRef}
+                type="file"
+                hidden
+                onChange={handleFileUpload}
+              ></Input>
+            </Box>
+            {uploadError && <Alert>{uploadError}</Alert>}
           </Box>
           <Text fontSize="xl">Tax Invoice</Text>
         </Stack>
@@ -400,18 +413,19 @@ const InvoiceLayout: React.FC = () => {
         <Stat>
           <StatLabel>Tax</StatLabel>
           <Input
-            w='xsm'
+            w="xsm"
             type="number"
-            min='0'
-            value={invoice.invoiceTax || ''}
+            min="0"
+            value={invoice.invoiceTax || ""}
             onChange={(e) => handleChange("invoiceTax", e.target.value)}
-          ></Input> %
+          ></Input>{" "}
+          %
         </Stat>
         <Stat>
           <StatLabel>Total</StatLabel>
           <StatNumber>₹{total}</StatNumber>
         </Stat>
-        <Text fontSize='sm'>{total !== 0 ? toWords.convert(total) : null}</Text>
+        <Text fontSize="sm">{total !== 0 ? toWords.convert(total) : null}</Text>
       </Stack>
     </div>
   );
