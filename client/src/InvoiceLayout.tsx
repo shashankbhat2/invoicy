@@ -425,7 +425,7 @@ const InvoiceLayout: React.FC = () => {
           <StatLabel>Total</StatLabel>
           <StatNumber>₹{total}</StatNumber>
         </Stat>
-        <Text fontSize="sm">{total !== 0 ? toWords.convert(total) : null}</Text>
+        <Text maxW='18rem' fontSize="sm">{total !== 0 ? toWords.convert(total) : null}</Text>
       </Stack>
     </div>
   );
