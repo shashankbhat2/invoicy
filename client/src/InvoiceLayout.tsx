@@ -402,6 +402,7 @@ const InvoiceLayout: React.FC = () => {
           <Input
             w='xsm'
             type="number"
+            min='0'
             value={invoice.invoiceTax || ''}
             onChange={(e) => handleChange("invoiceTax", e.target.value)}
           ></Input> %
