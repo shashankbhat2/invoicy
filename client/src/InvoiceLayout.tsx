@@ -395,7 +395,7 @@ const InvoiceLayout: React.FC = () => {
       >
         <Stat>
           <StatLabel>Subtotal</StatLabel>
-          <StatNumber>₹{subTotal}.00</StatNumber>
+          <StatNumber>₹{subTotal}</StatNumber>
         </Stat>
         <Stat>
           <StatLabel>Tax</StatLabel>
@@ -409,7 +409,7 @@ const InvoiceLayout: React.FC = () => {
         </Stat>
         <Stat>
           <StatLabel>Total</StatLabel>
-          <StatNumber>₹{total}.00</StatNumber>
+          <StatNumber>₹{total}</StatNumber>
         </Stat>
         <Text fontSize='sm'>{total !== 0 ? toWords.convert(total) : null}</Text>
       </Stack>
