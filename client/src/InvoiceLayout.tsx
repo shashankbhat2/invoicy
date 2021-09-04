@@ -34,6 +34,16 @@ import {
 } from "./config/firebase";
 import STATES from "./utils/states.json";
 import { initialInvoice, initialItemLine } from "./utils/data";
+import { ToWords } from 'to-words';
+
+const toWords = new ToWords({
+  localeCode: 'en-IN',
+  converterOptions: {
+    currency: true,
+    ignoreDecimal: false,
+    ignoreZeroCurrency: false,
+  }
+})
 
 
 const InvoiceLayout: React.FC = () => {
@@ -385,7 +395,7 @@ const InvoiceLayout: React.FC = () => {
       >
         <Stat>
           <StatLabel>Subtotal</StatLabel>
-          <StatNumber>{subTotal}</StatNumber>
+          <StatNumber>₹{subTotal}.00</StatNumber>
         </Stat>
         <Stat>
           <StatLabel>Tax</StatLabel>
@@ -398,8 +408,9 @@ const InvoiceLayout: React.FC = () => {
         </Stat>
         <Stat>
           <StatLabel>Total</StatLabel>
-          <StatNumber>{total}</StatNumber>
+          <StatNumber>₹{total}.00</StatNumber>
         </Stat>
+        <Text fontSize='sm'>{total !== 0 ? toWords.convert(total) : null}</Text>
       </Stack>
     </div>
   );

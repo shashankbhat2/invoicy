@@ -10072,6 +10072,11 @@
   "resolved" "https://registry.npmjs.org/number-is-nan/-/number-is-nan-1.0.1.tgz"
   "version" "1.0.1"
 
+"number-to-words@^1.2.4":
+  "integrity" "sha512-/fYevVkXRcyBiZDg6yzZbm0RuaD6i0qRfn8yr+6D0KgBMOndFPxuW10qCHpzs50nN8qKuv78k8MuotZhcVX6Pw=="
+  "resolved" "https://registry.npmjs.org/number-to-words/-/number-to-words-1.2.4.tgz"
+  "version" "1.2.4"
+
 "nwsapi@^2.2.0":
   "integrity" "sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ=="
   "resolved" "https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.0.tgz"
@@ -13557,6 +13562,11 @@
     "extend-shallow" "^3.0.2"
     "regex-not" "^1.0.2"
     "safe-regex" "^1.1.0"
+
+"to-words@^2.5.0":
+  "integrity" "sha512-Kutc3SJXcTCX5ny0wmpiHtdUd9LIJAmrx5/r7zgaX9o6xCcGlSbfrhYEFL80JM9w4i8l9HpV04pJ7BNhq3pBUA=="
+  "resolved" "https://registry.npmjs.org/to-words/-/to-words-2.5.0.tgz"
+  "version" "2.5.0"
 
 "toggle-selection@^1.0.6":
   "integrity" "sha1-bkWxJj8gF/oKzH2J14sVuL932jI="
